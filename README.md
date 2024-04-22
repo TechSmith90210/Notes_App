@@ -10,7 +10,7 @@ The Notes App is a mobile application developed using Flutter and Firebase, desi
 - Fast and responsive user interface
 
 ## Screenshots
-[![Screenshot-20240423-013356.jpg](https://i.postimg.cc/WzpQ1K0x/Screenshot-20240423-013356.jpg)](https://postimg.cc/r0bhhfn9)
+[![Screenshot-20240423-013356.jpg](https://i.postimg.cc/MZsLY97K/Screenshot-20240423-013356.jpg)](https://postimg.cc/PNwKXzVB)
 
 ## Installation
 To install and run the Notes App, follow these steps:
@@ -39,3 +39,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 Salman Shaikh - sshaikhdev@gmail.com - https://portfolio-salman.000webhostapp.com
+
+## Future Roadmap
+
+- Add support for attachments, such as images and documents, in notes.
+- Enhance the user interface with customizable themes and layouts.
+- Implement offline mode to allow users to access and edit notes without an internet connection.
+- Dark Mode
+- Rich Text Formatting in notes
