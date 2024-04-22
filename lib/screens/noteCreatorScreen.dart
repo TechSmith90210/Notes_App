@@ -20,48 +20,53 @@ class _NoteCreatorScreenState extends State<NoteCreatorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         backgroundColor: AppStyle.bgColor,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              controller: _titleController,
-              style: GoogleFonts.playfairDisplay(
-                color: AppStyle.mainColor,
-                fontSize: 35,
-                fontWeight: FontWeight.w600,
-              ),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Enter Title',
-                hintStyle: GoogleFonts.playfairDisplay(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                maxLines: null,
+                controller: _titleController,
+                style: GoogleFonts.playfairDisplay(
                   color: AppStyle.mainColor,
                   fontSize: 35,
                   fontWeight: FontWeight.w600,
                 ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Enter Title',
+                  hintStyle: GoogleFonts.playfairDisplay(
+                    color: AppStyle.mainColor,
+                    fontSize: 35,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
-            ),
-            TextField(
-              controller: _bodyController,
-              style: GoogleFonts.nunito(
-                color: AppStyle.mainColor,
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-              ),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Enter Body',
-                hintStyle: GoogleFonts.nunito(
+              TextField(
+                maxLines: null,
+                controller: _bodyController,
+                style: GoogleFonts.nunito(
                   color: AppStyle.mainColor,
                   fontSize: 20,
                   fontWeight: FontWeight.w400,
                 ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Enter Body',
+                  hintStyle: GoogleFonts.nunito(
+                    color: AppStyle.mainColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

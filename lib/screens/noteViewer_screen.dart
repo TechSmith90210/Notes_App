@@ -81,7 +81,7 @@ class _NoteViewerScreenState extends State<NoteViewerScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => CategorySelectionScreen(
-                      selectedCategories: selectedCategories,
+                      // selectedCategories: selectedCategories,
                       snapshot: widget.snapshot,
                     ),
                   ),
@@ -161,7 +161,7 @@ class _NoteViewerScreenState extends State<NoteViewerScreen> {
                   }
                   if (snapshot.hasData && snapshot.data!.exists) {
                     final data = snapshot.data!.data() as Map<String, dynamic>?;
-                    categories = (data?['Categories'] as List<dynamic>?) ?? [];
+                    final categories = (data?['Categories'] as List<dynamic>?) ?? [];
 
                     if (categories.isNotEmpty) {
                       return Wrap(

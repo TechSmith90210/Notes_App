@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notes_app/services/firebase_service.dart';
@@ -85,8 +86,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
             height: 3,
           ),
           StreamBuilder<QuerySnapshot>(
-            stream:
-                FirebaseFirestore.instance.collection('Categories').snapshots(),
+            stream: FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser?.uid)
+                .collection('Categories')
+                .snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());

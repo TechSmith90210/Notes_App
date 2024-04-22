@@ -79,6 +79,8 @@ class FireBaseService {
 
     try {
       await _firestore
+          .collection(usersCollection)
+          .doc(userId)
           .collection(categoriesCollection)
           .doc(uuid)
           .set({'id': uuid, 'name': name, 'creationDate': Timestamp.now()});
@@ -93,6 +95,8 @@ class FireBaseService {
 
     try {
       await _firestore
+          .collection(usersCollection)
+          .doc(userId)
           .collection(categoriesCollection)
           .doc(uid)
           .update({'name': name});
@@ -106,27 +110,43 @@ class FireBaseService {
     if (userId == null) return;
 
     try {
-      await _firestore.collection(categoriesCollection).doc(uid).delete();
+      await _firestore
+          .collection(usersCollection)
+          .doc(userId)
+          .collection(categoriesCollection)
+          .doc(uid)
+          .delete();
       print('Category deleted successfully: $uid');
     } catch (e) {
       print('Error deleting category: $e');
     }
   }
 
-  Future<List<String>> getNoteCategories(String noteId) async {
+  Future<List<String>> getCategoriesForNote(String noteId) async {
+    String? userId = getCurrentUserId();
+    if (userId == null) return [];
     try {
-      final noteDoc = await _firestore.collection('Notes').doc(noteId).get();
-      final data = noteDoc.data();
-      if (data != null && data['Categories'] != null) {
-        final List<dynamic> categories = data['Categories'];
-        return categories.map((category) => category.toString()).toList();
-      }
-      return [];
+      // Query Firestore to get the categories associated with the note ID
+      final snapshot = await FirebaseFirestore.instance
+          .collection(usersCollection)
+          .doc(userId)
+          .collection('Notes')
+          .doc(noteId)
+          .get();
+
+      // Extract the categories from the document and cast to List<String>
+      final List<dynamic>? categories = snapshot.data()?['Categories'];
+      final List<String> stringCategories = List<String>.from(categories ?? []);
+
+      // Return the categories
+      return stringCategories;
     } catch (e) {
-      print('Error fetching note categories: $e');
-      throw e;
+      // Handle any errors that occur during the process
+      print('Error fetching categories for note: $e');
+      return [];
     }
   }
+
   Future<void> addNoteToCategory(String uid, List<dynamic> category) async {
     String? userId = getCurrentUserId();
     if (userId == null) return;

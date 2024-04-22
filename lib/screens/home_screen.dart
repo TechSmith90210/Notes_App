@@ -267,6 +267,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(FirebaseAuth.instance.currentUser?.uid)
                           .collection('Categories')
                           .snapshots(),
                       builder: (context, snapshot) {

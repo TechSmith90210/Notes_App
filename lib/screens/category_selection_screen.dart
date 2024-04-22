@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/services/firebase_service.dart';
 
 class CategorySelectionScreen extends StatefulWidget {
   final QueryDocumentSnapshot snapshot;
-  final List<String> selectedCategories;
 
-  const CategorySelectionScreen(
-      {Key? key, required this.snapshot, required this.selectedCategories})
+  const CategorySelectionScreen({Key? key, required this.snapshot})
       : super(key: key);
 
   @override
@@ -17,11 +16,32 @@ class CategorySelectionScreen extends StatefulWidget {
 
 class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   late FireBaseService fireBaseService;
+  List<String> selectedCategories = [];
 
   @override
   void initState() {
     super.initState();
     fireBaseService = FireBaseService();
+    _getCurrentCategories();
+  }
+
+  Future<void> _getCurrentCategories() async {
+    final categories = await fireBaseService.getCategoriesForNote(widget.snapshot.id);
+    setState(() {
+      selectedCategories = categories;
+    });
+  }
+
+  Future<List<String>> _fetchCategories() async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection('Categories')
+        .get();
+    final List<String> allCategories = snapshot.docs
+        .map((doc) => doc['name'] as String)
+        .toList();
+    return allCategories;
   }
 
   @override
@@ -34,52 +54,47 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
           onPressed: () async {
             await fireBaseService.addNoteToCategory(
               widget.snapshot.id,
-              widget.selectedCategories,
+              selectedCategories,
             );
             Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back),
         ),
       ),
-      body: SingleChildScrollView(
-        child: StreamBuilder<QuerySnapshot>(
-          stream:
-              FirebaseFirestore.instance.collection('Categories').snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            }
-            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return Center(child: Text('No categories available.'));
-            }
-            final List<String> allCategories = snapshot.data!.docs
-                .map((doc) => doc['name'] as String)
-                .toList();
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: allCategories.length,
-              itemBuilder: (context, index) {
-                final category = allCategories[index];
-                final isChecked = widget.selectedCategories.contains(category);
-                return CheckboxListTile(
-                  title: Text(category),
-                  value: isChecked,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      if (value != null) {
-                        if (value) {
-                          widget.selectedCategories.add(category);
-                        } else {
-                          widget.selectedCategories.remove(category);
-                        }
+      body: FutureBuilder<List<String>>(
+        future: _fetchCategories(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No categories available.'));
+          }
+          final List<String> allCategories = snapshot.data!;
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: allCategories.length,
+            itemBuilder: (context, index) {
+              final category = allCategories[index];
+              final isChecked = selectedCategories.contains(category);
+              return CheckboxListTile(
+                title: Text(category),
+                value: isChecked,
+                onChanged: (bool? value) {
+                  setState(() {
+                    if (value != null) {
+                      if (value) {
+                        selectedCategories.add(category);
+                      } else {
+                        selectedCategories.remove(category);
                       }
-                    });
-                  },
-                );
-              },
-            );
-          },
-        ),
+                    }
+                  });
+                },
+              );
+            },
+          );
+        },
       ),
     );
   }

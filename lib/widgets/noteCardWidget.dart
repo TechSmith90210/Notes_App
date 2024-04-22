@@ -12,7 +12,7 @@ Widget noteWidget(Function()? onTap, Function()? onLongPress,
     onTap: onTap,
     onLongPress: onLongPress,
     child: Container(
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.all(14),
       margin: EdgeInsets.symmetric(horizontal: 6),
       decoration: BoxDecoration(
         color: AppStyle.mainColor,
@@ -38,10 +38,10 @@ Widget noteWidget(Function()? onTap, Function()? onLongPress,
             snapshot['noteBody'],
             style: AppStyle.secondaryFont,
             overflow: TextOverflow.ellipsis,
-            maxLines: 2,
+            maxLines: 4,
           ),
           SizedBox(
-            height: 15,
+            height: 5,
           ),
           if (categories != null && categories.length > 0)
             Wrap(
@@ -49,16 +49,17 @@ Widget noteWidget(Function()? onTap, Function()? onLongPress,
               runSpacing: 2,
               children: [
                 ...categories.take(2).map<Widget>((category) => Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: AppStyle.tertiaryColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    category.toString(),
-                    style: TextStyle(color: Colors.black,fontSize: 12),
-                  ),
-                )),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: AppStyle.tertiaryColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        category.toString(),
+                        style: TextStyle(color: Colors.black, fontSize: 12),
+                      ),
+                    )),
                 if (remainingCategoriesCount > 0)
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -68,7 +69,7 @@ Widget noteWidget(Function()? onTap, Function()? onLongPress,
                     ),
                     child: Text(
                       '+$remainingCategoriesCount',
-                      style: TextStyle(color: Colors.black,fontSize: 12),
+                      style: TextStyle(color: Colors.black, fontSize: 12),
                     ),
                   ),
               ],
