@@ -10,7 +10,7 @@ The Notes App is a mobile application developed using Flutter and Firebase, desi
 - Fast and responsive user interface
 
 ## Screenshots
-[![Screenshot-20240423-013356.jpg](https://i.postimg.cc/MZsLY97K/Screenshot-20240423-013356.jpg)](https://postimg.cc/PNwKXzVB)
+[![Screenshot-20240423-013356.jpg](https://i.postimg.cc/MZsLY97K/Screenshot-20240423-013356.jpg)](https://postimg.cc/PNwKXzVB) [![Screenshot-20240423-015619.jpg](https://i.postimg.cc/Vk44Y6Ks/Screenshot-20240423-015619.jpg)](https://postimg.cc/bZD1gzX4)
 
 ## Installation
 To install and run the Notes App, follow these steps:
