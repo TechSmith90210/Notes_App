@@ -1,3 +1,5 @@
+![notes_app_header](https://github.com/user-attachments/assets/c2891e16-a251-49e5-9ad2-ccbf0956e2f7)
+
 # Notes App
 
 ## Overview
