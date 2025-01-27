@@ -40,7 +40,7 @@ Contributions are welcome!
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
-Salman Shaikh - sshaikhdev@gmail.com - https://portfolio-salman.000webhostapp.com
+Salman Shaikh - sshaikhdev@gmail.com - [Portfolio](https://salman-portfolio-cyan.vercel.app)
 
 ## Future Roadmap
 
